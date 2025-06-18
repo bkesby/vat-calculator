@@ -9,6 +9,6 @@ import App from './App';
 
 test('renders VAT Calculator text', () => {
   render(<App />);
-  const heading = screen.getByText(/VAT CALCULATOR/i);
+  const heading = screen.getByText(/Ben Kesby/i);
   expect(heading).toBeInTheDocument();
 });
