@@ -1,6 +1,7 @@
 pipeline {
     agent any
     environment {
+	awsCreds = 'aws_credentials'
         dockerCreds = credentials('dockerhub_login')
 	registry = "${dockerCreds_USR}/vatcal"
 	registryCredentials = "dockerhub_login"
@@ -20,16 +21,6 @@ pipeline {
 		}
 	    }
         }
-	stage('Dive Analysis') {
-	    steps {
-		sh "CI=true dive registry"
-	    }
-	}
-	stage('Grype Analysis') {
-	    steps {
-		sh "grype registry --scope all-layers"
-	    }
-	}
 	stage('Push Image') {
 	    steps {
 		script {
@@ -43,6 +34,17 @@ pipeline {
 	stage('Clean Up') {
 	    steps {
 		sh "docker image prune --all --force --filter 'until=48h'"
+	    }
+	}
+	stage('Provision Server') {
+	    steps {
+		script {
+		    withCredentials([file(credentialsID: awsCreds, variable: 'AWS_CREDENTIALS')]) {
+			sh 'echo "creds_file = $AWS_CREDENTIALS" > terraform.tfvars'
+			sh 'terraform init'
+			sh 'terraform apply'
+		     }
+		}
 	    }
 	}
     }
