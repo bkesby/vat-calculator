@@ -25,6 +25,11 @@ pipeline {
 		sh "CI=true dive registry"
 	    }
 	}
+	stage('Grype Analysis') {
+	    steps {
+		sh "grype registry --scope all-layers"
+	    }
+	}
 	stage('Push Image') {
 	    steps {
 		script {
