@@ -39,7 +39,7 @@ pipeline {
 	stage('Provision Server') {
 	    steps {
 		script {
-		    withCredentials([file(credentialsID: awsCreds, variable: 'AWS_CREDENTIALS')]) {
+		    withCredentials([file(credentialsId: awsCreds, variable: 'AWS_CREDENTIALS')]) {
 			sh 'echo "creds_file = $AWS_CREDENTIALS" > terraform.tfvars'
 			sh 'terraform init'
 			sh 'terraform apply'
