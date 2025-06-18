@@ -22,7 +22,7 @@ pipeline {
         }
 	stage('Dive Analysis') {
 	    steps {
-		CI=true dive dockerImage
+		sh "CI=true dive dockerImage"
 	    }
 	}
 	stage('Push Image') {
