@@ -15,7 +15,7 @@ provider "aws" {
 }
 
 resource "aws_instance" "docker_server" {
-  ami = "resolve:ssm:/aws/service/ami-amazon-linux-latest/al2023-ami-kernel-defaultx86_64"
+  ami = "resolve:ssm:/aws/service/ami-amazon-linux-latest/al2023-ami-kernel-default-x86_64"
   instance_type = "t3.medium"
   subnet_id = "subnet-084e7f1e3ce1f633a"
   vpc_security_group_ids = ["sg-084b8f1393497c678"]
