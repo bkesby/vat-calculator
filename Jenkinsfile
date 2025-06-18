@@ -22,7 +22,7 @@ pipeline {
         }
 	stage('Dive Analysis') {
 	    steps {
-		sh "CI=true dive registry"
+		sh "CI=true dive ${dockerImage.imageName()}"
 	    }
 	}
 	stage('Grype Analysis') {
