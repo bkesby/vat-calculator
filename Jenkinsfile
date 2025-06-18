@@ -20,6 +20,11 @@ pipeline {
 		}
 	    }
         }
+	stage('Dive Analysis') {
+	    steps {
+		CI=true dive dockerImage
+	    }
+	}
 	stage('Push Image') {
 	    steps {
 		script {
