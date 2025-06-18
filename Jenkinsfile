@@ -22,7 +22,7 @@ pipeline {
         }
 	stage('Dive Analysis') {
 	    steps {
-		sh "CI=true dive dockerImage"
+		sh "CI=true dive registry"
 	    }
 	}
 	stage('Push Image') {
