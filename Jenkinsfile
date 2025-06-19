@@ -6,6 +6,7 @@ pipeline {
 	registry = "${dockerCreds_USR}/vatcal"
 	registryCredentials = "dockerhub_login"
 	dockerImage = ""
+	KUBECONFIG = "config.yaml"
     }
     stages {
 	stage('Run Tests') {
@@ -34,6 +35,13 @@ pipeline {
 	stage('Clean Up') {
 	    steps {
 		sh "docker image prune --all --force --filter 'until=48h'"
+	    }
+	}
+	stage('Deploy to Kubernetes') {
+	    steps {
+		sh "cp -u /mnt/k3s/config config.yaml"
+		sh "kubectl apply -f kubernetes/deploy.yml"
+		sh "kubectl apply -f kubernetes/service.yml"
 	    }
 	}
     }
